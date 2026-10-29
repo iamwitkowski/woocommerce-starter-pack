@@ -1,0 +1,13 @@
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+# bin/ (dev-only WP-CLI seed) is not analysed: php-stubs/wp-cli-stubs does not yet support wordpress-stubs 7.x.
+parameters:
+	level: 6
+	phpVersion: 80300
+	paths:
+		- functions.php
+		- inc
+		- patterns
+	scanFiles:
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php

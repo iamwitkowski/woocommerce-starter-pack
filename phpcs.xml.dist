@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ruleset name="StarterPack">
+	<description>WordPress Coding Standards for the Starter Pack theme.</description>
+
+	<file>functions.php</file>
+	<file>inc</file>
+	<file>patterns</file>
+	<file>bin</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<config name="minimum_wp_version" value="7.0"/>
+
+	<rule ref="WordPress"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="starter-pack"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="StarterPack"/>
+				<element value="starter_pack"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Classes in inc/ follow PSR-4 file naming (Foo.php), loaded by inc/autoload.php. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>inc/*</exclude-pattern>
+	</rule>
+</ruleset>
