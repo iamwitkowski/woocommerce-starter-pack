@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/wp/7.0/theme.json",
+	"version": 3,
+	"slug": "section-inverted",
+	"title": "Inverted",
+	"blockTypes": [
+		"core/group",
+		"core/columns",
+		"core/column"
+	],
+	"styles": {
+		"color": {
+			"background": "var:preset|color|text",
+			"text": "var:preset|color|background"
+		},
+		"elements": {
+			"heading": {
+				"color": {
+					"text": "var:preset|color|background"
+				}
+			},
+			"link": {
+				"color": {
+					"text": "var:preset|color|background"
+				}
+			},
+			"button": {
+				"color": {
+					"background": "var:preset|color|background",
+					"text": "var:preset|color|text"
+				},
+				":hover": {
+					"color": {
+						"background": "var:preset|color|surface",
+						"text": "var:preset|color|text"
+					}
+				}
+			},
+			"caption": {
+				"color": {
+					"text": "var:preset|color|background"
+				}
+			}
+		},
+		"blocks": {
+			"core/post-date": {
+				"color": {
+					"text": "var:preset|color|background"
+				}
+			},
+			"core/separator": {
+				"color": {
+					"text": "var:preset|color|background"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/wp/7.0/theme.json",
+	"version": 3,
+	"slug": "section-surface",
+	"title": "Surface",
+	"blockTypes": [
+		"core/group",
+		"core/columns",
+		"core/column",
+		"core/cover"
+	],
+	"styles": {
+		"color": {
+			"background": "var:preset|color|surface",
+			"text": "var:preset|color|text"
+		}
+	}
+}

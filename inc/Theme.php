@@ -21,5 +21,6 @@ final class Theme {
 	 */
 	public function register(): void {
 		( new Setup() )->register();
+		( new Assets() )->register();
 	}
 }

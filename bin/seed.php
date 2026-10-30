@@ -135,4 +135,38 @@ if ( ! wc_get_coupon_id_by_code( 'TEST10' ) ) {
 	$starter_pack_coupon->save();
 }
 
+// Design-system fixture page: every globally styled element, used by contrast/axe tests.
+$starter_pack_fixture = <<<'HTML'
+<!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Heading 1</h1><!-- /wp:heading -->
+<!-- wp:heading --><h2 class="wp-block-heading">Heading 2 — zażółć gęślą jaźń</h2><!-- /wp:heading -->
+<!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Heading 3</h3><!-- /wp:heading -->
+<!-- wp:heading {"level":4} --><h4 class="wp-block-heading">Heading 4</h4><!-- /wp:heading -->
+<!-- wp:heading {"level":5} --><h5 class="wp-block-heading">Heading 5</h5><!-- /wp:heading -->
+<!-- wp:heading {"level":6} --><h6 class="wp-block-heading">Heading 6</h6><!-- /wp:heading -->
+<!-- wp:paragraph --><p>Paragraph with <a href="/shop/">a link to the shop</a> and Polish characters: zażółć gęślą jaźń.</p><!-- /wp:paragraph -->
+<!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/shop/">Primary button</a></div><!-- /wp:button --></div><!-- /wp:buttons -->
+<!-- wp:quote --><blockquote class="wp-block-quote"><!-- wp:paragraph --><p>A quote.</p><!-- /wp:paragraph --><cite>Citation</cite></blockquote><!-- /wp:quote -->
+<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>List item</li><!-- /wp:list-item --></ul><!-- /wp:list -->
+<!-- wp:table --><figure class="wp-block-table"><table><thead><tr><th>Name</th><th>Price</th></tr></thead><tbody><tr><td>Hoodie</td><td>45 zł</td></tr></tbody></table><figcaption class="wp-element-caption">Table caption</figcaption></figure><!-- /wp:table -->
+<!-- wp:code --><pre class="wp-block-code"><code>const code = true;</code></pre><!-- /wp:code -->
+<!-- wp:separator --><hr class="wp-block-separator has-alpha-channel-opacity"/><!-- /wp:separator -->
+<!-- wp:html --><form onsubmit="return false"><p><label for="sp-email">E-mail</label><br><input id="sp-email" type="email" placeholder="you@example.com"></p><p><label for="sp-country">Country</label><br><select id="sp-country"><option>Polska</option></select></p><p><input id="sp-terms" type="checkbox"> <label for="sp-terms">I accept the terms</label></p><p><label for="sp-note">Note</label><br><textarea id="sp-note"></textarea></p></form><!-- /wp:html -->
+<!-- wp:group {"className":"is-style-section-surface","layout":{"type":"constrained"}} --><div class="wp-block-group is-style-section-surface"><!-- wp:heading --><h2 class="wp-block-heading">Surface section</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Text with <a href="/shop/">a link</a>.</p><!-- /wp:paragraph --></div><!-- /wp:group -->
+<!-- wp:group {"className":"is-style-section-inverted","layout":{"type":"constrained"}} --><div class="wp-block-group is-style-section-inverted"><!-- wp:heading --><h2 class="wp-block-heading">Inverted section</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Text with <a href="/shop/">a link</a>.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/shop/">Inverted button</a></div><!-- /wp:button --></div><!-- /wp:buttons --></div><!-- /wp:group -->
+HTML;
+
+$starter_pack_fixture_page = get_page_by_path( 'design-system' );
+// WP-CLI runs without a user, so kses would strip the form controls from trusted fixture markup.
+kses_remove_filters();
+wp_insert_post(
+	array(
+		'ID'           => $starter_pack_fixture_page ? $starter_pack_fixture_page->ID : 0,
+		'post_type'    => 'page',
+		'post_status'  => 'publish',
+		'post_name'    => 'design-system',
+		'post_title'   => 'Design system',
+		'post_content' => $starter_pack_fixture,
+	)
+);
+
 WP_CLI::success( 'Test store seeded.' );

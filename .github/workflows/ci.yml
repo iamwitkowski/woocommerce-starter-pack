@@ -25,7 +25,7 @@ jobs:
       - run: composer run analyse
 
   js:
-    name: JS lint
+    name: JS + CSS lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -35,6 +35,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint:js
+      - run: npm run lint:css
 
   e2e:
     name: E2E (latest WordPress + WooCommerce)

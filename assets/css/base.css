@@ -1,0 +1,59 @@
+/*
+ * Global base styles not expressible in theme.json.
+ * Colours come only from theme.json presets so every palette/variation applies automatically.
+ */
+
+/* Visible keyboard focus everywhere; text colour always contrasts with the page background. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline: var(--wp--custom--focus--width) solid var(--wp--preset--color--text);
+	outline-offset: var(--wp--custom--focus--offset);
+}
+
+/* Form controls. Borders use "muted", which is required to keep 4.5:1 against background. */
+:where(
+	input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="reset"], [type="hidden"], [type="range"], [type="color"]),
+	select,
+	textarea
+) {
+	box-sizing: border-box;
+	max-width: 100%;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: var(--wp--custom--radius--control);
+	background-color: var(--wp--preset--color--background);
+	color: var(--wp--preset--color--text);
+	font: inherit;
+	line-height: 1.4;
+}
+
+:where(input[type="checkbox"], input[type="radio"]) {
+	width: 1.125rem;
+	height: 1.125rem;
+	accent-color: var(--wp--preset--color--primary);
+}
+
+:where(label) {
+	font-weight: 500;
+}
+
+:where(::placeholder) {
+	color: var(--wp--preset--color--muted);
+	opacity: 1;
+}
+
+:where(input, select, textarea):disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+	}
+}

@@ -11,11 +11,13 @@
 		"env:stop": "wp-env stop",
 		"env:seed": "wp-env run cli wp eval-file wp-content/themes/starter-pack/bin/seed.php",
 		"lint:js": "wp-scripts lint-js tests playwright.config.mjs",
+		"lint:css": "wp-scripts lint-style \"assets/**/*.css\"",
 		"lint:php": "composer run lint",
 		"analyse:php": "composer run analyse",
 		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
+		"@axe-core/playwright": "4.14.0",
 		"@playwright/test": "1.64.1",
 		"@wordpress/env": "12.0.0",
 		"@wordpress/scripts": "37.0.0"

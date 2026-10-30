@@ -6,6 +6,7 @@
 	<file>inc</file>
 	<file>patterns</file>
 	<file>bin</file>
+	<file>tests</file>
 
 	<arg name="extensions" value="php"/>
 	<arg name="colors"/>

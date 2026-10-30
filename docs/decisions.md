@@ -28,6 +28,16 @@ Oznaczenia: **[F]** zweryfikowane w kodzie lub w działającym sklepie, **[R]** 
 | E1-4 | Brak pola licencji w `style.css` i `composer.json` (model dystrybucji odłożony, D5). |
 | E1-5 | Klasy `Assets`, `Blocks` i `WooCommerce\*` powstaną w etapach, które ich potrzebują. W etapie 1 nie ma pustych klas. |
 
+## Decyzje etapu 2 (system designu)
+
+| # | Decyzja |
+|---|---|
+| E2-1 | Paleta ma 8 ról: 7 ze specyfikacji + `on-primary`, który gwarantuje czytelny tekst przycisków przy dowolnym `primary`. |
+| E2-2 | Domyślnie fonty systemowe (0 KB). Fraunces (OFL, ~70 KB) tylko w opcjonalnym presecie Editorial. Inter odrzucony: ~133 KB z polskimi znakami tylko dla kroju normalnego. Sprzedawca może dodać inne fonty przez wbudowaną Bibliotekę fontów WordPressa. |
+| E2-3 | Breakpointy `settings.viewport` = domyślne WordPressa (480 / 782 px), zapisane jawnie, żeby zgadzały się z podglądem w edytorze. |
+| E2-4 | Style komponentów WooCommerce (pola checkoutu, karty produktów, Mini-Cart) powstaną w etapach 4–5. W etapie 2 sprawdzamy tylko, że paleta trafia do przycisków WooCommerce. |
+| E2-5 | `base.css` jest ładowany z danymi `path`, więc WordPress go inline'uje (brak dodatkowego żądania). |
+
 ## Wyniki spike'a
 
 ### Cart drawer → natywny Mini-Cart [F]
