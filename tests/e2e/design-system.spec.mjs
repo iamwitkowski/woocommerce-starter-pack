@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { wpCli } from './wp-cli.mjs';
+import { applyVariation } from './wp-cli.mjs';
 
 const FIXTURE = '/design-system/';
 
@@ -47,12 +47,6 @@ function expectedPalette( file ) {
 				.match( /../g )
 				.map( ( hex ) => parseInt( hex, 16 ) ),
 		] )
-	);
-}
-
-function applyVariation( name ) {
-	wpCli(
-		`wp --user=1 eval-file wp-content/themes/starter-pack/tests/e2e/bin/apply-style-variation.php ${ name }`
 	);
 }
 
@@ -149,13 +143,27 @@ test.describe( 'design system', () => {
 					} )
 				).toHaveCSS( 'background-color', primary );
 
+				// Listing cards use an outline button: primary border and text.
 				await page.goto( '/shop/' );
+				const cardButton = page
+					.locator( '.wc-block-components-product-button__button' )
+					.first();
+				await expect( cardButton ).toHaveCSS(
+					'border-top-color',
+					primary
+				);
+				await expect( cardButton ).toHaveCSS( 'color', primary );
+
+				// The product page's main Add to cart button is filled with primary.
+				await page.goto( '/product/beanie/' );
 				await expect(
 					page
 						.locator(
+							'.wp-block-woocommerce-add-to-cart-with-options'
+						)
+						.locator(
 							'.wc-block-components-product-button__button'
 						)
-						.first()
 				).toHaveCSS( 'background-color', primary );
 			} );
 

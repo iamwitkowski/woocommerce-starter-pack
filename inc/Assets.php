@@ -19,11 +19,21 @@ final class Assets {
 	private const BASE_STYLE        = 'assets/css/base.css';
 	private const BASE_STYLE_HANDLE = 'starter-pack-base';
 
+	private const ACCOUNT_STYLE        = 'assets/css/woocommerce-account.css';
+	private const ACCOUNT_STYLE_HANDLE = 'starter-pack-woocommerce-account';
+
 	/**
 	 * Per-block stylesheets in assets/css/blocks/, loaded only on pages that render the block.
 	 */
 	private const BLOCK_STYLES = array(
-		'woocommerce/mini-cart' => 'woocommerce-mini-cart',
+		'woocommerce/mini-cart'                => 'woocommerce-mini-cart',
+		'woocommerce/product-collection'       => 'woocommerce-product-collection',
+		'woocommerce/product-filters'          => 'woocommerce-product-filters',
+		'woocommerce/product-gallery'          => 'woocommerce-single-product',
+		'woocommerce/product-details'          => 'woocommerce-single-product',
+		'woocommerce/add-to-cart-with-options' => 'woocommerce-single-product',
+		'woocommerce/cart'                     => 'woocommerce-cart-checkout',
+		'woocommerce/checkout'                 => 'woocommerce-cart-checkout',
 	);
 
 	/**
@@ -31,6 +41,7 @@ final class Assets {
 	 */
 	public function register(): void {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_base_style' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_account_style' ) );
 		add_action( 'after_setup_theme', array( $this, 'add_editor_style' ) );
 		add_action( 'init', array( $this, 'enqueue_block_styles' ) );
 	}
@@ -46,6 +57,22 @@ final class Assets {
 			$this->version()
 		);
 		wp_style_add_data( self::BASE_STYLE_HANDLE, 'path', get_theme_file_path( self::BASE_STYLE ) );
+	}
+
+	/**
+	 * Styles for the classic My Account shortcode, only on account pages (it is not a block, so it cannot use block styles).
+	 */
+	public function enqueue_account_style(): void {
+		if ( ! function_exists( 'is_account_page' ) || ! is_account_page() ) {
+			return;
+		}
+		wp_enqueue_style(
+			self::ACCOUNT_STYLE_HANDLE,
+			get_theme_file_uri( self::ACCOUNT_STYLE ),
+			array(),
+			$this->version()
+		);
+		wp_style_add_data( self::ACCOUNT_STYLE_HANDLE, 'path', get_theme_file_path( self::ACCOUNT_STYLE ) );
 	}
 
 	/**

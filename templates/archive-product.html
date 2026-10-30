@@ -1,0 +1,41 @@
+<!-- wp:template-part {"slug":"header","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:var(--wp--preset--spacing--50)">
+	<!-- wp:woocommerce/breadcrumbs {"align":"wide","textColor":"muted"} /-->
+
+	<!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"var:preset|spacing|30","margin":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"720px","justifyContent":"left"}} -->
+	<div class="wp-block-group alignwide" style="margin-top:var(--wp--preset--spacing--40);margin-bottom:var(--wp--preset--spacing--60)">
+		<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
+		<!-- wp:term-description {"textColor":"muted"} /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:woocommerce/store-notices {"align":"wide"} /-->
+
+	<!-- wp:columns {"align":"wide","className":"shop-layout","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
+	<div class="wp-block-columns alignwide shop-layout">
+		<!-- wp:column {"width":"15rem","className":"shop-layout__filters"} -->
+		<div class="wp-block-column shop-layout__filters" style="flex-basis:15rem">
+			<!-- wp:pattern {"slug":"starter-pack/hidden-product-filters"} /-->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column {"className":"shop-layout__products"} -->
+		<div class="wp-block-column shop-layout__products">
+			<!-- wp:group {"className":"shop-toolbar","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+			<div class="wp-block-group shop-toolbar" style="margin-bottom:var(--wp--preset--spacing--50)">
+				<!-- wp:woocommerce/product-results-count {"textColor":"muted"} /-->
+				<!-- wp:woocommerce/catalog-sorting {"useLabel":true} /-->
+			</div>
+			<!-- /wp:group -->
+
+			<!-- wp:pattern {"slug":"starter-pack/hidden-product-grid"} /-->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer"} /-->

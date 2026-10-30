@@ -52,6 +52,22 @@ Oznaczenia: **[F]** zweryfikowane w kodzie lub w działającym sklepie, **[R]** 
 | E3-8 | Środowisko wp-env: `WP_DEVELOPMENT_MODE=theme` (bez cache wzorców i `theme.json` podczas pracy) oraz `AUTOMATIC_UPDATER_DISABLED` (automatyczne aktualizacje pisały do `debug.log` i mogłyby zmienić wersję WordPressa w trakcie testów). Uwaga: na produkcji WordPress cache'uje listę wzorców per wersja motywu, więc nowe pliki w `patterns/` wymagają podbicia `Version` w `style.css`. |
 | E3-9 | Szablony: `index` (blog), `single`, `page`, `archive`, `search`, `404`. Listy wpisów korzystają ze wspólnego wzorca `hidden-posts-grid` (siatka `grid` z min. szerokością kolumny 18rem, więc liczba kolumn dopasowuje się sama). `front-page.html` powstanie w etapie 7 razem z hero. |
 
+## Decyzje etapu 4 (szablony WooCommerce)
+
+| # | Decyzja |
+|---|---|
+| E4-1 | Testy E2E działają na **osobnym środowisku** `.wp-env.test.json` (port 8891, własne kontenery i baza), uruchamianym przez `npm run env:test:start`. Środowisko deweloperskie 8890 służy do ręcznego klikania i zmian w edytorze, a testy go nie dotykają. Mechanizm: `--config` z wp-env 12 (opcja `testsEnvironment` jest przestarzała). |
+| E4-2 | Listing (`archive-product`, `product-search-results`; kategorie, tagi i atrybuty dziedziczą `archive-product`): natywne **Product Filters** w panelu bocznym, poniżej breakpointu tablet (782 px z `theme.json`) jako nakładka WooCommerce. Sortowanie i licznik wyników z bloków WC. 12 produktów na stronę (`loop_shop_per_page`, priorytet 5, więc wtyczki mogą to nadpisać). |
+| E4-3 | Karta produktu to wzorzec `hidden-product-card`, wspólny dla listingu i powiązanych produktów. Przycisk w karcie jest obrysowy (drugorzędny), a główny „Add to cart” na stronie produktu jest wypełniony. |
+| E4-4 | Strona produktu używa bloków na Interactivity API zamiast klasycznych jQuery: `product-gallery` zamiast `product-image-gallery` (flexslider/photoswipe), Add to Cart + Options zamiast `add-to-cart-form`, `product-details` jako `core/accordion` (Opis, Informacje dodatkowe, Opinie z blokiem `product-reviews`). |
+| E4-5 | Szkielet `single-product.html` leży bezpośrednio w szablonie, a nie w jednym wzorcu. Warstwa kompatybilności WooCommerce wybiera „pierwszy blok” na podstawie struktury szablonu. Przy całej treści we wzorcu doklejała region komunikatów do karty w powiązanych produktach. We wzorcach zostały tylko części z tekstami do tłumaczenia (akordeon, powiązane produkty). |
+| E4-6 | JSON-LD: szablon produktu zawiera `woocommerce/breadcrumbs` i `woocommerce/product-summary`. Test sprawdza dokładnie jeden `Product` i jeden `BreadcrumbList`. |
+| E4-7 | Kasa ma osobną część `checkout-header` (nazwa sklepu i „Back to cart”, bez menu i Mini-Cart) i nie ma stopki. Koszyk ma pełny nagłówek i stopkę. |
+| E4-8 | „Moje konto” to klasyczny shortcode WooCommerce (nie ma bloku). Jego style (`assets/css/woocommerce-account.css`) ładują się tylko na `is_account_page()`. Panel menu ma tę samą szerokość co filtry sklepu (15rem). |
+| E4-9 | Style WooCommerce są podzielone per blok (`Assets::BLOCK_STYLES`, `wp_enqueue_block_style`) i inline'owane tylko tam, gdzie blok się renderuje. Pola, checkboxy i radio w koszyku i kasie biorą kolory z palety, bo WC ma na sztywno białe tła (sprawdzone testem na palecie Midnight). |
+| E4-10 | **Błędy dostępności WC 11.2.1 załatane w motywie** (`WooCommerce\Accessibility` i CSS): (a) `aria-label` bez roli na gwiazdkach filtra ocen → `role="img"`; (b) `role="list"` bez elementów listy w selektorze wariantów → rola usunięta; (c) za małe cele checkboxów filtrów i przycisku „pokaż hasło” (WCAG 2.5.8) → większe odstępy i rozmiar; (d) nieaktywny „Add to cart” przyciemniany przez `opacity` (kontrast 3,3:1) → kolory `muted`/`surface` z kontraktu palety; (e) limit 1000 px na tytułach koszyka i konta z `woocommerce-blocktheme.css` → szeroka siatka motywu. Do zgłoszenia w WooCommerce. |
+| E4-11 | Seed dodaje 3 opinie z ocenami. `wp_insert_comment()` przelicza liczniki przed zapisem meta `rating`, dlatego średnia jest przeliczana jawnie (`WC_Comments::clear_transients`). |
+
 ## Wyniki spike'a
 
 ### Cart drawer → natywny Mini-Cart [F]

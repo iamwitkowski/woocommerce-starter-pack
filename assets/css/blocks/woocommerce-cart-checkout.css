@@ -1,0 +1,64 @@
+/*
+ * Cart and Checkout blocks. WooCommerce hard-codes white fields and black controls;
+ * these rules map them to the palette so every style variation (including dark ones) works.
+ * Repeated classes outrank WooCommerce's selectors without !important.
+ */
+.wc-block-components-text-input.wc-block-components-text-input.wc-block-components-text-input input,
+.wc-block-components-textarea.wc-block-components-textarea,
+.wc-blocks-components-select.wc-blocks-components-select .wc-blocks-components-select__select {
+	border-color: var(--wp--preset--color--muted);
+	border-radius: var(--wp--custom--radius--control);
+	background-color: var(--wp--preset--color--background);
+	color: var(--wp--preset--color--text);
+}
+
+.wc-block-components-text-input.wc-block-components-text-input label,
+.wc-blocks-components-select.wc-blocks-components-select .wc-blocks-components-select__label {
+	color: var(--wp--preset--color--muted);
+}
+
+.wc-block-components-checkbox.wc-block-components-checkbox .wc-block-components-checkbox__input[type="checkbox"],
+.wc-block-components-radio-control.wc-block-components-radio-control .wc-block-components-radio-control__input {
+	border-color: var(--wp--preset--color--muted);
+	background-color: var(--wp--preset--color--background);
+}
+
+.wc-block-components-checkbox.wc-block-components-checkbox .wc-block-components-checkbox__mark {
+	fill: var(--wp--preset--color--text);
+}
+
+.wc-block-components-radio-control.wc-block-components-radio-control .wc-block-components-radio-control__input:checked::before {
+	background: var(--wp--preset--color--text);
+}
+
+/* Summary cards: cart totals and checkout order summary sit on the surface colour. */
+.wp-block-woocommerce-cart-totals-block,
+.wp-block-woocommerce-checkout-order-summary-block.wp-block-woocommerce-checkout-order-summary-block {
+	padding: var(--wp--preset--spacing--40) var(--wp--preset--spacing--50);
+	border: 0;
+	border-radius: var(--wp--custom--radius--card);
+	background-color: var(--wp--preset--color--surface);
+}
+
+.wc-block-components-totals-wrapper,
+.wc-block-components-panel,
+.wc-block-cart-items td,
+.wc-block-cart-items th {
+	border-color: color-mix(in srgb, var(--wp--preset--color--muted) 30%, transparent);
+}
+
+.wc-block-components-main .wc-block-components-title,
+.wc-block-components-checkout-step__title {
+	font-weight: 600;
+}
+
+/* Primary actions use the theme button radius. */
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
+	border-radius: var(--wp--custom--radius--button);
+}
+
+/* WooCommerce's block-theme stylesheet caps the page title at 1000px; keep it on the theme's wide grid. */
+.woocommerce-cart .wp-block-post-title.alignwide {
+	max-width: var(--wp--style--global--wide-size);
+}

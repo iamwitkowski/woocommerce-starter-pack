@@ -92,7 +92,8 @@
 	},
 	"templateParts": [
 		{ "name": "header", "title": "Header", "area": "header" },
-		{ "name": "footer", "title": "Footer", "area": "footer" }
+		{ "name": "footer", "title": "Footer", "area": "footer" },
+		{ "name": "checkout-header", "title": "Checkout header", "area": "header" }
 	],
 	"styles": {
 		"color": {
@@ -175,6 +176,20 @@
 			}
 		},
 		"blocks": {
+			"woocommerce/breadcrumbs": {
+				"color": { "text": "var:preset|color|muted" },
+				"typography": { "fontSize": "var:preset|font-size|small" },
+				"elements": {
+					"link": { "color": { "text": "var:preset|color|muted" } }
+				}
+			},
+			"woocommerce/product-results-count": {
+				"color": { "text": "var:preset|color|muted" },
+				"typography": { "fontSize": "var:preset|font-size|small" }
+			},
+			"woocommerce/catalog-sorting": {
+				"typography": { "fontSize": "var:preset|font-size|small" }
+			},
 			"core/search": {
 				"border": {
 					"color": "var:preset|color|muted",

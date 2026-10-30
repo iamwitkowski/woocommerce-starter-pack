@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.WP_BASE_URL || 'http://localhost:8890';
+// Tests run against the separate test environment (npm run env:test:start), never the development site.
+const baseURL = process.env.WP_BASE_URL || 'http://localhost:8891';
 
 export default defineConfig( {
 	testDir: './tests/e2e',

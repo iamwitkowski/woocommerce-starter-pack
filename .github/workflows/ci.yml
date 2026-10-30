@@ -49,7 +49,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run env:start
+      - run: npm run env:test:start
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v7
         if: failure()

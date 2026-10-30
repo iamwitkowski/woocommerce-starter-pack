@@ -1,0 +1,89 @@
+/* My Account (classic WooCommerce shortcode), loaded only on account pages. */
+
+/* WooCommerce's block-theme stylesheet caps these at 1000px; align them with the theme's wide grid. */
+.woocommerce-account main .wp-block-post-title,
+.woocommerce-account main .wp-block-post-content,
+.woocommerce-account main .woocommerce {
+	max-width: var(--wp--style--global--wide-size);
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+	margin: 0;
+	padding: var(--wp--preset--spacing--30);
+	border-radius: var(--wp--custom--radius--card);
+	background-color: var(--wp--preset--color--surface);
+	list-style: none;
+}
+
+/* Same sidebar width and gap as the shop filters. */
+@media (min-width: 782px) {
+
+	.woocommerce-account main .woocommerce:has(> .woocommerce-MyAccount-navigation) {
+		display: grid;
+		grid-template-columns: 15rem minmax(0, 1fr);
+		gap: var(--wp--preset--spacing--60);
+		align-items: start;
+	}
+
+	/* Notices and other wrappers span both columns; :where() keeps this below the column rules. */
+	:where(.woocommerce-account main .woocommerce:has(> .woocommerce-MyAccount-navigation)) > * {
+		grid-column: 1 / -1;
+	}
+
+	.woocommerce-account .woocommerce .woocommerce-MyAccount-navigation {
+		grid-column: 1;
+		float: none;
+		width: auto;
+	}
+
+	.woocommerce-account .woocommerce .woocommerce-MyAccount-content {
+		grid-column: 2;
+		float: none;
+		width: auto;
+	}
+}
+
+@media (max-width: 781px) {
+
+	.woocommerce-account .woocommerce-MyAccount-navigation ul {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li {
+	margin: 0;
+	padding: 0;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation a {
+	display: block;
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+	border-radius: var(--wp--custom--radius--control);
+	color: var(--wp--preset--color--text);
+	text-decoration: none;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation a:hover {
+	text-decoration: underline;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation .is-active a {
+	background-color: var(--wp--preset--color--background);
+	font-weight: 600;
+}
+
+.woocommerce-account :where(.woocommerce-form-login, .woocommerce-form-register, .woocommerce-ResetPassword) {
+	max-width: 30rem;
+	border-color: color-mix(in srgb, var(--wp--preset--color--muted) 30%, transparent);
+	border-radius: var(--wp--custom--radius--card);
+}
+
+/* Password visibility toggle: 24px minimum target (WCAG 2.5.8). */
+.woocommerce-account .show-password-input {
+	min-width: 1.5rem;
+	min-height: 1.5rem;
+}

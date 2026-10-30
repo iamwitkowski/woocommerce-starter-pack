@@ -214,4 +214,39 @@ foreach ( array_keys( $starter_pack_posts ) as $starter_pack_index => $starter_p
 	}
 }
 
+// Product reviews with ratings, so stars, counts and the reviews section have data.
+$starter_pack_reviews = array(
+	'woo-hoodie' => array( array( 'Anna', 5, 'Great fit and very warm.' ), array( 'Piotr', 4, 'Good quality, sleeves a bit long.' ) ),
+	'woo-beanie' => array( array( 'Kasia', 5, 'Soft and cosy.' ) ),
+);
+foreach ( $starter_pack_reviews as $starter_pack_sku => $starter_pack_product_reviews ) {
+	$starter_pack_product_id = wc_get_product_id_by_sku( $starter_pack_sku );
+	if ( ! $starter_pack_product_id ) {
+		continue;
+	}
+	if ( get_comments(
+		array(
+			'post_id' => $starter_pack_product_id,
+			'count'   => true,
+		)
+	) ) {
+		continue;
+	}
+	foreach ( $starter_pack_product_reviews as list( $starter_pack_author, $starter_pack_rating, $starter_pack_text ) ) {
+		wp_insert_comment(
+			array(
+				'comment_post_ID'      => $starter_pack_product_id,
+				'comment_author'       => $starter_pack_author,
+				'comment_author_email' => strtolower( $starter_pack_author ) . '@example.com',
+				'comment_content'      => $starter_pack_text,
+				'comment_type'         => 'review',
+				'comment_approved'     => 1,
+				'comment_meta'         => array( 'rating' => $starter_pack_rating ),
+			)
+		);
+	}
+	// wp_insert_comment() updates the comment count before saving meta, so recalculate the average here.
+	WC_Comments::clear_transients( $starter_pack_product_id );
+}
+
 WP_CLI::success( 'Test store seeded.' );

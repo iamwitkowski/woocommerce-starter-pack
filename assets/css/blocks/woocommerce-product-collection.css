@@ -1,0 +1,114 @@
+/* Product cards (Product Collection: listings, related products). */
+.product-cards {
+	row-gap: var(--wp--preset--spacing--60);
+}
+
+.product-cards > li {
+	display: flex;
+	flex-direction: column;
+}
+
+.product-cards.product-cards > li {
+	margin: 0;
+}
+
+.product-card__image {
+	position: relative;
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--wp--custom--radius--card);
+	background-color: var(--wp--preset--color--surface);
+}
+
+/*
+ * On product pages WooCommerce's template compatibility layer can attach the
+ * woocommerce_before_single_product notices region to a card image. Notices are
+ * shown by the Store Notices block at the top of the page, so this copy is hidden.
+ */
+.product-card__image > .wc-block-components-notices {
+	display: none;
+}
+
+.product-card__image img {
+	transition: transform var(--wp--custom--transition);
+}
+
+.product-cards > li:hover .product-card__image img {
+	transform: scale(1.03);
+}
+
+/* Sale badge: inverted text/background colours, so contrast holds in every palette. */
+.product-card__image .wc-block-components-product-sale-badge {
+	position: absolute;
+	top: var(--wp--preset--spacing--30);
+	left: var(--wp--preset--spacing--30);
+	margin: 0;
+	padding: 0.25em 0.6em;
+	border: 0;
+	border-radius: var(--wp--preset--border-radius--full);
+	background-color: var(--wp--preset--color--text);
+	color: var(--wp--preset--color--background);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.product-card__body {
+	flex-grow: 1;
+}
+
+.product-card__title {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 500;
+	letter-spacing: 0;
+	line-height: 1.35;
+}
+
+.product-card__title a {
+	color: var(--wp--preset--color--text);
+	text-decoration: none;
+}
+
+.product-card__title a:hover {
+	text-decoration: underline;
+}
+
+.product-card__price {
+	font-weight: 600;
+}
+
+.product-card__price del {
+	margin-right: 0.35em;
+	color: var(--wp--preset--color--muted);
+	font-weight: 400;
+}
+
+.product-card__price ins {
+	text-decoration: none;
+}
+
+/* Secondary (outline) button; it fills with the primary colour on hover. Doubled class beats WooCommerce's "border-style: none". */
+.product-card__button {
+	margin-top: var(--wp--preset--spacing--30);
+}
+
+.product-card__button.product-card__button .wp-block-button__link {
+	width: 100%;
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--primary);
+	background-color: transparent;
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--small);
+	transition: background-color var(--wp--custom--transition), color var(--wp--custom--transition);
+}
+
+.product-card__button.product-card__button .wp-block-button__link:hover {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--on-primary);
+}
+
+.product-card__button .wc-block-components-product-button__button--placeholder {
+	display: none;
+}

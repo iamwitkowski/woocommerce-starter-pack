@@ -24,5 +24,7 @@ final class Theme {
 		( new Assets() )->register();
 		( new WooCommerce\HookedBlocks() )->register();
 		( new WooCommerce\MiniCart() )->register();
+		( new WooCommerce\Catalog() )->register();
+		( new WooCommerce\Accessibility() )->register();
 	}
 }
