@@ -22,5 +22,7 @@ final class Theme {
 	public function register(): void {
 		( new Setup() )->register();
 		( new Assets() )->register();
+		( new WooCommerce\HookedBlocks() )->register();
+		( new WooCommerce\MiniCart() )->register();
 	}
 }

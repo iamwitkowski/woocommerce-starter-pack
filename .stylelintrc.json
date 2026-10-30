@@ -3,6 +3,7 @@
 	"rules": {
 		"color-no-hex": true,
 		"color-named": "never",
+		"selector-class-pattern": null,
 		"function-disallowed-list": [ "rgb", "rgba", "hsl", "hsla", "hwb", "lab", "lch", "oklab", "oklch" ]
 	}
 }

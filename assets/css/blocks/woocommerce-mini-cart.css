@@ -1,0 +1,5 @@
+/* WC 11.2 leaves the closed drawer tabbable under aria-hidden; hide it after the 0.3s slide-out. */
+.wc-block-components-drawer__screen-overlay--is-hidden .wc-block-components-drawer {
+	visibility: hidden;
+	transition: transform 0.3s, visibility 0s 0.3s;
+}

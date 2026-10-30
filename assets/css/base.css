@@ -46,6 +46,11 @@
 	cursor: not-allowed;
 }
 
+/* Core search hard-codes a white field background; follow the palette instead (border comes from theme.json). */
+.wp-block-search__button-inside .wp-block-search__inside-wrapper {
+	background-color: var(--wp--preset--color--background);
+}
+
 @media (prefers-reduced-motion: reduce) {
 
 	*,

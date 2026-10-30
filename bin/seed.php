@@ -20,6 +20,10 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 WP_CLI::runcommand( 'theme activate starter-pack' );
 WP_CLI::runcommand( 'rewrite structure /%postname%/ --hard', array( 'exit_error' => false ) );
 
+// Site identity used in screenshots and header/footer tests.
+update_option( 'blogname', 'Starter Pack' );
+update_option( 'blogdescription', 'Fast WooCommerce block theme' );
+
 // Store settings: PLN, Polish VAT, prices entered and displayed with tax.
 $starter_pack_options = array(
 	'woocommerce_coming_soon'                => 'no',
@@ -168,5 +172,46 @@ wp_insert_post(
 		'post_content' => $starter_pack_fixture,
 	)
 );
+
+// Blog fixtures: posts with featured images (taken from the product catalogue), a category and tags.
+$starter_pack_guides = term_exists( 'Guides', 'category' );
+if ( ! $starter_pack_guides ) {
+	$starter_pack_guides = wp_insert_term( 'Guides', 'category', array( 'description' => 'How-to articles for customers.' ) );
+}
+$starter_pack_images = get_posts(
+	array(
+		'post_type'      => 'attachment',
+		'post_mime_type' => 'image',
+		'posts_per_page' => 3,
+		'post__not_in'   => array( (int) get_option( 'woocommerce_placeholder_image' ) ),
+		'orderby'        => 'ID',
+		'order'          => 'ASC',
+		'fields'         => 'ids',
+	)
+);
+$starter_pack_posts  = array(
+	'how-to-choose-a-hoodie' => 'How to choose a hoodie',
+	'caring-for-cotton'      => 'Caring for cotton clothes',
+	'gift-ideas'             => 'Gift ideas — zażółć gęślą jaźń',
+);
+foreach ( array_keys( $starter_pack_posts ) as $starter_pack_index => $starter_pack_slug ) {
+	$starter_pack_existing = get_page_by_path( $starter_pack_slug, OBJECT, 'post' );
+	$starter_pack_post_id  = $starter_pack_existing ? $starter_pack_existing->ID : wp_insert_post(
+		array(
+			'post_type'     => 'post',
+			'post_status'   => 'publish',
+			'post_name'     => $starter_pack_slug,
+			'post_title'    => $starter_pack_posts[ $starter_pack_slug ],
+			'post_excerpt'  => 'A short summary used on archive cards.',
+			'post_content'  => '<!-- wp:paragraph --><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p><!-- /wp:paragraph --><!-- wp:heading --><h2 class="wp-block-heading">Section heading</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Sed posuere consectetur est at lobortis. <a href="/shop/">Visit the shop</a>.</p><!-- /wp:paragraph -->',
+			'post_category' => array( (int) $starter_pack_guides['term_id'] ),
+			'tags_input'    => array( 'cotton', 'care' ),
+			'post_date'     => gmdate( 'Y-m-d H:i:s', strtotime( '-' . ( $starter_pack_index + 1 ) . ' days' ) ),
+		)
+	);
+	if ( isset( $starter_pack_images[ $starter_pack_index ] ) ) {
+		set_post_thumbnail( $starter_pack_post_id, $starter_pack_images[ $starter_pack_index ] );
+	}
+}
 
 WP_CLI::success( 'Test store seeded.' );

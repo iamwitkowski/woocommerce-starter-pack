@@ -38,6 +38,20 @@ Oznaczenia: **[F]** zweryfikowane w kodzie lub w działającym sklepie, **[R]** 
 | E2-4 | Style komponentów WooCommerce (pola checkoutu, karty produktów, Mini-Cart) powstaną w etapach 4–5. W etapie 2 sprawdzamy tylko, że paleta trafia do przycisków WooCommerce. |
 | E2-5 | `base.css` jest ładowany z danymi `path`, więc WordPress go inline'uje (brak dodatkowego żądania). |
 
+## Decyzje etapu 3 (szablony WordPressa)
+
+| # | Decyzja |
+|---|---|
+| E3-1 | Części `header` i `footer` zawierają tylko odwołanie do wzorców PHP (`starter-pack/header`, `starter-pack/footer`), bo pliki `.html` nie obsługują tłumaczeń. WooCommerce w swoich szablonach odwołuje się do tych samych slugów, więc sklep od razu dostaje nagłówek i stopkę motywu. Landmarki `<header>`/`<footer>` pochodzą z obszaru części zadeklarowanego w `theme.json` (`templateParts`). |
+| E3-2 | Domyślne menu nagłówka (Sklep + do 5 kategorii produktów najwyższego poziomu) i stopki (Sklep, Moje konto, Koszyk) buduje `StarterPack\Navigation` z prawdziwych stron sklepu. Po edycji w Edytorze witryny WordPress zapisuje menu jako `wp_navigation`, a kod przestaje być używany. |
+| E3-3 | Wyszukiwarka produktów jest blokiem `core/search` (`post_type=product`) wewnątrz nawigacji: na desktopie stoi w linii, na mobile trafia do menu nakładkowego. Jedna instancja, bez dodatkowego JS. |
+| E3-4 | Announcement bar to wzorzec `starter-pack/announcement-bar` (grupa z wariantem sekcji „Inverted”). Wyłącza się go, usuwając blok w Edytorze witryny. Wzorzec jest też dostępny w inserterze. |
+| E3-5 | WooCommerce wstawia przez Block Hooks Mini-Cart i Konto za `core/navigation` w nagłówkach. Nagłówek motywu ma je już na stałe, więc wzorzec jest na liście wykluczeń (`woocommerce_hooked_blocks_pattern_exclude_list`, klasa `WooCommerce\HookedBlocks`). Bez tego ikona konta była zdublowana. |
+| E3-6 | **Błąd WC 11.2.1 (A11Y-3):** zamknięta szuflada Mini-Cart ma `aria-hidden="true"`, ale jej przycisk i link pozostają w kolejności Tab (axe: `aria-hidden-focus`). Poprawka: `visibility: hidden` z opóźnieniem 0,3 s (animacja zamykania zostaje) w `assets/css/blocks/woocommerce-mini-cart.css`, ładowanym przez `wp_enqueue_block_style` tylko z blokiem. Do zgłoszenia w WooCommerce. |
+| E3-7 | **Błąd WC 11.2.1:** na stronach koszyka i kasy Mini-Cart renderuje wersję nieinteraktywną bez `restUrl`, a współdzielony store koszyka wysyła `GET undefinedwc/store/v1/cart` (404). Motyw nie renderuje Mini-Cart na tych dwóch stronach (`WooCommerce\MiniCart`, filtr `render_block_woocommerce/mini-cart`). Tam i tak dublowałby treść strony. |
+| E3-8 | Środowisko wp-env: `WP_DEVELOPMENT_MODE=theme` (bez cache wzorców i `theme.json` podczas pracy) oraz `AUTOMATIC_UPDATER_DISABLED` (automatyczne aktualizacje pisały do `debug.log` i mogłyby zmienić wersję WordPressa w trakcie testów). Uwaga: na produkcji WordPress cache'uje listę wzorców per wersja motywu, więc nowe pliki w `patterns/` wymagają podbicia `Version` w `style.css`. |
+| E3-9 | Szablony: `index` (blog), `single`, `page`, `archive`, `search`, `404`. Listy wpisów korzystają ze wspólnego wzorca `hidden-posts-grid` (siatka `grid` z min. szerokością kolumny 18rem, więc liczba kolumn dopasowuje się sama). `front-page.html` powstanie w etapie 7 razem z hero. |
+
 ## Wyniki spike'a
 
 ### Cart drawer → natywny Mini-Cart [F]
