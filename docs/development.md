@@ -35,7 +35,7 @@ Oba środowiska mają własne kontenery (`wp-env-woocommerce-starter-pack-*` i `
 |---|---|
 | `npm run lint:php` | PHPCS, WordPress Coding Standards 3 (`phpcs.xml.dist`) |
 | `npm run analyse:php` | PHPStan poziom 6 ze stubami WordPress i WooCommerce |
-| `npm run lint:js` | ESLint (`@wordpress/scripts`) |
+| `npm run lint:js` | ESLint (`@wordpress/scripts`): testy i `assets/js` |
 | `npm run lint:css` | Stylelint; odrzuca kolory wpisane na sztywno |
 | `npm run test:e2e` | Playwright na środowisku testowym (8891): mobile (Pixel 7) + desktop. Suite kończy się błędem, jeśli `wp-content/debug.log` nie jest pusty. |
 

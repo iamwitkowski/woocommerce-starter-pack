@@ -68,6 +68,16 @@ Oznaczenia: **[F]** zweryfikowane w kodzie lub w działającym sklepie, **[R]** 
 | E4-10 | **Błędy dostępności WC 11.2.1 załatane w motywie** (`WooCommerce\Accessibility` i CSS): (a) `aria-label` bez roli na gwiazdkach filtra ocen → `role="img"`; (b) `role="list"` bez elementów listy w selektorze wariantów → rola usunięta; (c) za małe cele checkboxów filtrów i przycisku „pokaż hasło” (WCAG 2.5.8) → większe odstępy i rozmiar; (d) nieaktywny „Add to cart” przyciemniany przez `opacity` (kontrast 3,3:1) → kolory `muted`/`surface` z kontraktu palety; (e) limit 1000 px na tytułach koszyka i konta z `woocommerce-blocktheme.css` → szeroka siatka motywu. Do zgłoszenia w WooCommerce. |
 | E4-11 | Seed dodaje 3 opinie z ocenami. `wp_insert_comment()` przelicza liczniki przed zapisem meta `rating`, dlatego średnia jest przeliczana jawnie (`WC_Comments::clear_transients`). |
 
+## Decyzje etapu 5 (szuflada koszyka)
+
+| # | Decyzja |
+|---|---|
+| E5-1 | Natywny Mini-Cart z `addToCartBehaviour: "open_drawer"` w nagłówku. Kolory szuflady dziedziczą z palety (sprawdzone na Midnight). Motyw dodaje tylko typografię, zaokrąglenia i separatory (`assets/css/blocks/woocommerce-mini-cart.css`). |
+| E5-2 | **A11Y-1 (nazwa dialogu):** WooCommerce drukuje szufladę w `wp_footer` przez `echo`, bez filtra. `WooCommerce\MiniCart::wrap_overlay()` podmienia tylko ten callback na wersję z buforem i dodaje `aria-label="Shopping cart"` przez `WP_HTML_Tag_Processor`. Jeśli WooCommerce zmieni nazwę metody, poprawka się po prostu nie zastosuje, bez błędu. |
+| E5-3 | **A11Y-2 (powrót focusu):** w WC 11.2.1 otwarcie z ikony i zamknięcie Escape/przyciskiem przywraca focus poprawnie. Nadal błędny jest tylko przypadek automatycznego otwarcia po „Add to cart”: focus trafiał na `<body>`. `assets/js/mini-cart-focus.js` (~1 KB, bez zależności, `defer`, ładowany tylko z blokiem Mini-Cart) przywraca focus do ostatniego elementu sprzed otwarcia albo do ikony koszyka. |
+| E5-4 | **Szybka ścieżka do kasy (D9):** sekcja „Theme” w WooCommerce → Ustawienia → Zaawansowane (`woocommerce_get_sections_advanced` / `woocommerce_get_settings_advanced`), opcja `starter_pack_quick_checkout`, domyślnie `no`. Po włączeniu blok `woocommerce/mini-cart-cart-button-block` nie jest renderowany. Test E2E obejmuje oba stany, działającą stronę koszyka i zapis ustawienia w panelu. |
+| E5-5 | Na stronach koszyka i kasy Mini-Cart nie jest renderowany (E3-7), więc skrypt focusu też się tam nie ładuje. |
+
 ## Wyniki spike'a
 
 ### Cart drawer → natywny Mini-Cart [F]

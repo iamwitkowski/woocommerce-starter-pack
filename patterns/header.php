@@ -35,7 +35,7 @@ defined( 'ABSPATH' ) || exit;
 
 			<!-- wp:woocommerce/customer-account {"displayStyle":"icon_only","iconStyle":"line","iconClass":"wc-block-customer-account__account-icon"} /-->
 
-			<!-- wp:woocommerce/mini-cart /-->
+			<!-- wp:woocommerce/mini-cart {"addToCartBehaviour":"open_drawer"} /-->
 		</div>
 		<!-- /wp:group -->
 	</div>

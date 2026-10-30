@@ -26,5 +26,6 @@ final class Theme {
 		( new WooCommerce\MiniCart() )->register();
 		( new WooCommerce\Catalog() )->register();
 		( new WooCommerce\Accessibility() )->register();
+		( new WooCommerce\QuickCheckout() )->register();
 	}
 }
